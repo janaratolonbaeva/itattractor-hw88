@@ -1,4 +1,5 @@
 import axiosApi from "../../axiosApi";
+import {historyPush} from "./historyActions";
 
 export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST';
 export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
@@ -23,9 +24,15 @@ export const fetchPosts = () => {
 };
 
 export const postOnePost = (post) => {
-  return async dispatch => {
-    await axiosApi.post('/posts', post);
+  return async (dispatch, getState) => {
+    const token = getState().users.user.token;
+    const headers = {Authorization: token}
+
+    await axiosApi.post('/posts', post, {headers});
+
     dispatch(postPostSuccess());
+    dispatch(historyPush('/'));
   }
 }
+
 

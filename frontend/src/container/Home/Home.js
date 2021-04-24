@@ -12,8 +12,6 @@ const Home = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  console.log(posts);
-
   return (
     <>
       {posts && (Object.values(posts).map(item => (
